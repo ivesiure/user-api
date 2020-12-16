@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using User.API.Models;
 using User.API.Services.Interfaces;
 
@@ -20,6 +22,9 @@ namespace User.API.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// Authenticates the user and returns a valid JWT token.
+        /// </summary>
         [HttpPost(), AllowAnonymous]
         public object Post([FromBody] AuthenticationViewModel authView)
         {
@@ -38,13 +43,18 @@ namespace User.API.Controllers
             }
         }
 
-        [HttpPatch()]
-        public void Patch([FromBody] AuthenticationViewModel authView)
+        /// <summary>
+        /// Change user password
+        /// </summary>
+        [HttpPost("password")]
+        public void Password([FromBody] AuthenticationViewModel authView)
         {
             try
             {
+                Claim idClaim = User.Claims.FirstOrDefault(i => i.Type == "Id");
+
                 Response.StatusCode = 200;
-                _authService.Authenticate(authView.Email, authView.Password);
+                _authService.ChangePassword(Guid.Parse(idClaim.Value), authView.Password);
             }
             catch (Exception ex)
             {

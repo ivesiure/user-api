@@ -23,6 +23,10 @@ namespace User.API.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Get a list of users.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<UserViewModel> Get()
         {
@@ -40,6 +44,9 @@ namespace User.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a specific user based on its ID
+        /// </summary>
         [HttpGet("{id}")]
         public UserViewModel Get(Guid id)
         {
@@ -58,6 +65,9 @@ namespace User.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates a new user
+        /// </summary>
         [HttpPost()]
         public void Post([FromBody] UserViewModel userView)
         {
@@ -74,6 +84,9 @@ namespace User.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates a user's name
+        /// </summary>
         [HttpPatch("{id}")]
         public void Patch(Guid id, [FromBody] UserViewModel userView)
         {
@@ -90,6 +103,9 @@ namespace User.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
         [HttpDelete("{id}")]
         public void Delete(Guid id)
         {

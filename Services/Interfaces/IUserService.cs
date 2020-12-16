@@ -15,6 +15,8 @@ namespace User.API.Services.Interfaces
 
         void Update(Guid id, Entities.User user);
 
+        void UpdatePassword(Guid id, string password, string salt);
+
         void Delete(Guid id);
     }
 }

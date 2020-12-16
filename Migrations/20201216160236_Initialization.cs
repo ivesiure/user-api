@@ -27,8 +27,8 @@ namespace User.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "Name", "Email", "Password", "Salt", "RegistrationDate" },
-                values: new object[] { "Admin", "admin@mail.com", password, salt, DateTime.Now });
+                columns: new[] { "Id", "Name", "Email", "Password", "Salt", "RegistrationDate" },
+                values: new object[] { Guid.NewGuid(), "Admin", "admin@mail.com", password, salt, DateTime.Now });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

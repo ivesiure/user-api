@@ -39,6 +39,7 @@ namespace User.API.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
+                    new Claim("Id", user.Id.ToString()),
                     new Claim("Name", user.Name),
                     new Claim("Email", user.Email),
                     new Claim("RgDate", user.RegistrationDate.ToString("yyyy-MM-ddTHH:mm:ss")),
@@ -50,9 +51,11 @@ namespace User.API.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public string ChangePassword()
+        public void ChangePassword(Guid id, string newPassword)
         {
-            return null;
+            (string password, string salt) = newPassword.GenerateSaltAndHashPassword();
+
+            _userService.UpdatePassword(id, password, salt);
         }
     }
 }

@@ -48,5 +48,16 @@ namespace User.API.Services
             _applicationContext.Update(usr);
             _applicationContext.SaveChanges();
         }
+
+        public void UpdatePassword(Guid id, string password, string salt)
+        {
+            var usr = _applicationContext.User.FirstOrDefault(i => i.Id == id);
+
+            usr.Password = password;
+            usr.Salt = salt;
+
+            _applicationContext.Update(usr);
+            _applicationContext.SaveChanges();
+        }
     }
 }

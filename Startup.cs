@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using User.API.Entities;
 using User.API.Services;
@@ -42,7 +44,22 @@ namespace User.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "User.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "User.API",
+                    Version = "v1",
+                    Description = "A simple and generic C# microservice API with custom authentication and MySQL database.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Ives Iure M. Ancelmo",
+                        Email = "ivesiure@gmail.com",
+                        Url = new Uri("https://www.linkedin.com/in/ivesiure/"),
+                    },
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             var key = Encoding.ASCII.GetBytes(_secretKey);
